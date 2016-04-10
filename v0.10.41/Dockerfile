@@ -11,7 +11,7 @@ ENV NPM_VERSION 2.14.1
 ENV WLN_LISTEN_PORT 80
 EXPOSE 80
 WORKDIR /wln
-ENTRYPOINT  ["nodemon","app.js"]
+ENTRYPOINT  ["node","app.js"]
 
 RUN apt-get update && apt-get install -y curl
 # gpg keys listed at https://github.com/nodejs/node
@@ -33,5 +33,4 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 	&& tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
 	&& rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
 	&& npm install -g npm@"$NPM_VERSION" \
-	&& npm install -g nodemon \
 	&& npm cache clear
