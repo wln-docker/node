@@ -9,7 +9,6 @@ MAINTAINER WlniaoStudio <ideploy@wlniao.com>
 ENV NODE_VERSION 0.10.41
 ENV NPM_VERSION 2.14.1
 ENV WLN_LISTEN_PORT 80
-ENV WLN_WEBPATH /wln
 
 ADD sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y curl
@@ -37,7 +36,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 	&& npm install -g nodemon \
 	&& npm cache clear
 
-EXPOSE $WLN_LISTEN_PORT
-WORKDIR $WLN_WEBPATH
+EXPOSE 80
+WORKDIR /wln
 #ENTRYPOINT  ["nodemon","app.js"]
 CMD node app.js
