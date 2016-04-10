@@ -9,10 +9,11 @@ MAINTAINER WlniaoStudio <ideploy@wlniao.com>
 ENV NODE_VERSION 0.10.41
 ENV NPM_VERSION 2.14.1
 ENV WLN_LISTEN_PORT 80
+EXPOSE 80
+WORKDIR /wln
+ENTRYPOINT  ["nodemon","app.js"]
 
-ADD sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y curl
-
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
   && for key in \
@@ -25,7 +26,6 @@ RUN set -ex \
   ; do \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
   done
-
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
 	&& curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
 	&& gpg --verify SHASUMS256.txt.asc \
@@ -35,8 +35,3 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 	&& npm install -g npm@"$NPM_VERSION" \
 	&& npm install -g nodemon \
 	&& npm cache clear
-
-EXPOSE 80
-WORKDIR /wln
-#ENTRYPOINT  ["nodemon","app.js"]
-CMD node app.js
