@@ -26,11 +26,11 @@ RUN set -ex \
   ; do \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
   done
-RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
-	&& curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+RUN curl -SLO "https://nodejs.org/dist/v0.10.41/node-v0.10.41-linux-x64.tar.gz" \
+	&& curl -SLO "https://nodejs.org/dist/v0.10.41/SHASUMS256.txt.asc" \
 	&& gpg --verify SHASUMS256.txt.asc \
-	&& grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
-	&& tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-	&& rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
-	&& npm install -g npm@"$NPM_VERSION" \
+	&& grep " node-v0.10.41-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
+	&& tar -xzf "node-v0.10.41-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
+	&& rm "node-v0.10.41-linux-x64.tar.gz" SHASUMS256.txt.asc \
+	&& npm install -g npm@"2.14.1" \
 	&& npm cache clear
